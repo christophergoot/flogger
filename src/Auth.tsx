@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useGoogleLogin } from '@react-oauth/google'
+import { useGoogleLogin, type UseGoogleLoginOptionsImplicitFlow } from '@react-oauth/google'
 
 const STORAGE_KEY = 'activityLog_spreadsheetId'
 
@@ -85,7 +85,7 @@ export function Auth({ onSignIn }: AuthProps) {
         setError(err?.type ?? 'Sign-in failed.')
       }
     },
-  })
+  } as UseGoogleLoginOptionsImplicitFlow)
 
   return (
     <div className="auth">
