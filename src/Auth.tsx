@@ -121,6 +121,7 @@ export function Auth({ onSignIn }: AuthProps) {
 
   return (
     <div className="auth">
+      <img src={`${import.meta.env.BASE_URL}favicon-f-whip.png`} alt="" className="auth-logo" width={64} height={64} />
       <h1 className="auth-title">Flogger</h1>
       <p className="auth-subtitle">Accountability hurts</p>
       <p className="auth-subtitle auth-subtitle--muted">Sign in with Google to store your activities in your own sheet</p>

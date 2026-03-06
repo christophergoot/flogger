@@ -85,6 +85,12 @@ input:focus {
 .auth {
   padding: 2rem 0;
 }
+.auth-logo {
+  display: block;
+  margin: 0 auto 0.75rem;
+  height: 64px;
+  width: auto;
+}
 .auth-title {
   font-size: 1.75rem;
   font-weight: 700;
@@ -133,9 +139,18 @@ input:focus {
   margin-bottom: 1.25rem;
 }
 .header-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   font-size: 1.35rem;
   font-weight: 600;
   margin: 0;
+}
+.header-logo {
+  flex-shrink: 0;
+  height: 28px;
+  width: auto;
+  vertical-align: middle;
 }
 .header-signout {
   background: transparent;
