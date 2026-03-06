@@ -44,7 +44,7 @@ export async function createSpreadsheet(accessToken: string): Promise<string> {
   const file = await api<{ id: string }>(accessToken, 'https://www.googleapis.com/drive/v3/files', {
     method: 'POST',
     body: JSON.stringify({
-      name: 'Flogged',
+      name: 'Flogger',
       mimeType: 'application/vnd.google-apps.spreadsheet',
     }),
   })

@@ -1,4 +1,4 @@
-# Flogged
+# Flogger
 
 **Accountability hurts.**
 
@@ -7,7 +7,7 @@ A simple web app for logging activities (name + duration in minutes). Each user 
 ## Stack
 
 - **Front end:** Vite + React + TypeScript
-- **Back end:** Google (Sign-In + Sheets API + Drive API) — no server; the user’s sheet lives in their Google account
+- **Back end:** Google (Sign-In + Sheets API + Drive API) — no server; the user's sheet lives in their Google account
 
 ## Setup
 
@@ -31,7 +31,7 @@ yarn install
 yarn dev
 ```
 
-Open http://localhost:5173, click **Sign in with Google**, and approve the requested scopes (email, Sheets, Drive file creation). On first sign-in a spreadsheet named **Flogged** is created in the user’s Drive and used from then on.
+Open http://localhost:5173, click **Sign in with Google**, and approve the requested scopes (email, Sheets, Drive file creation). On first sign-in a spreadsheet named **Flogger** is created in the user's Drive and used from then on.
 
 ### 3. GitHub Pages deployment
 
@@ -40,21 +40,21 @@ Open http://localhost:5173, click **Sign in with Google**, and approve the reque
 3. Add a repository secret: **Settings → Secrets and variables → Actions** → New repository secret:
    - Name: `VITE_GOOGLE_CLIENT_ID`
    - Value: your Google OAuth Client ID
-4. Add your GitHub Pages origin to the OAuth client’s **Authorized JavaScript origins** (e.g. `https://yourusername.github.io` or `https://yourusername.github.io/flogged` for project site).
+4. Add your GitHub Pages origin to the OAuth client's **Authorized JavaScript origins** (e.g. `https://yourusername.github.io` or `https://yourusername.github.io/flogger` for project site).
 5. Push to `main`; the workflow will build and deploy.
 
-The app will be at `https://<username>.github.io/flogged/`. If your repo name is different, set `base` in `vite.config.ts` to match (e.g. `base: '/your-repo-name/'`).
+The app will be at `https://<username>.github.io/flogger/`. If your repo name is different, set `base` in `vite.config.ts` to match (e.g. `base: '/your-repo-name/'`).
 
 ## How it works
 
 - **Sign-in:** Google Sign-In (OAuth) with scopes for email, Sheets, and Drive file creation.
-- **Sheet per user:** On first sign-in, the app creates a spreadsheet **Flogged** in the user’s Drive and stores its ID in `localStorage` keyed by email. Later sign-ins reuse that sheet.
+- **Sheet per user:** On first sign-in, the app creates a spreadsheet **Flogger** in the user's Drive and stores its ID in `localStorage` keyed by email. Later sign-ins reuse that sheet.
 - **Data:** Rows are written to and read from that sheet via the Sheets API (append, read, delete row). Columns: `id`, `name`, `duration_minutes`, `end_time`, `created_at`.
 
 ## Features
 
 - **Quick log:** Activity name + duration (minutes); submit with one click.
-- **Optional end time:** “Set end time (backfill)” lets you add a date and time for past entries.
-- **List:** Recent activities with created time; entries with an end time show “ended …”.
+- **Optional end time:** "Set end time (backfill)" lets you add a date and time for past entries.
+- **List:** Recent activities with created time; entries with an end time show "ended …".
 - **Delete:** Remove an entry from the list (and from the sheet).
-- **Your data:** The spreadsheet is in the user’s Google account; they can open it in Sheets anytime.
+- **Your data:** The spreadsheet is in the user's Google account; they can open it in Sheets anytime.

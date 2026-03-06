@@ -81,7 +81,7 @@ export function ActivityLog({ user, onSignOut }: ActivityLogProps) {
   return (
     <div className="activity-log">
       <header className="header">
-        <h1 className="header-title">Flogged</h1>
+        <h1 className="header-title">Flogger</h1>
         <button className="header-signout" onClick={onSignOut} type="button">
           Sign out
         </button>

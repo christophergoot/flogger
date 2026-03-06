@@ -121,7 +121,7 @@ export function Auth({ onSignIn }: AuthProps) {
 
   return (
     <div className="auth">
-      <h1 className="auth-title">Flogged</h1>
+      <h1 className="auth-title">Flogger</h1>
       <p className="auth-subtitle">Accountability hurts</p>
       <p className="auth-subtitle auth-subtitle--muted">Sign in with Google to store your activities in your own sheet</p>
       {error && (
