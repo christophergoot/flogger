@@ -44,6 +44,7 @@ const SCOPES = [
   'https://www.googleapis.com/auth/userinfo.email',
   'https://www.googleapis.com/auth/spreadsheets',
   'https://www.googleapis.com/auth/drive.file',
+  'https://www.googleapis.com/auth/drive.metadata.readonly', // find existing Flogger sheet across devices
 ].join(' ')
 
 function decodeJwtPayload(token: string): { email?: string } {
@@ -91,12 +92,11 @@ export function Auth({ onSignIn }: AuthProps) {
           return
         }
 
-        let spreadsheetId = localStorage.getItem(`${STORAGE_KEY}_${email}`)
-        if (!spreadsheetId) {
-          const { createSpreadsheet } = await import('./lib/googleApi')
-          spreadsheetId = await createSpreadsheet(access_token)
-          localStorage.setItem(`${STORAGE_KEY}_${email}`, spreadsheetId)
-        }
+        // Use Drive as single source of truth: find existing "Flogger" sheet or create one.
+        // This ensures all devices with the same Google account use the same spreadsheet.
+        const { findOrCreateSpreadsheet } = await import('./lib/googleApi')
+        const spreadsheetId = await findOrCreateSpreadsheet(access_token)
+        localStorage.setItem(`${STORAGE_KEY}_${email}`, spreadsheetId)
 
         const expiresAt = Date.now() + (cred.expires_in ?? 3600) * 1000
         localStorage.setItem(SESSION_KEY, JSON.stringify({ email, accessToken: access_token, spreadsheetId, expiresAt }))

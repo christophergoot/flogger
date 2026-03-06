@@ -39,13 +39,39 @@ async function api<T>(
   return res.json()
 }
 
+const FLOGGER_SHEET_NAME = 'Flogger'
+const SPREADSHEET_MIME = 'application/vnd.google-apps.spreadsheet'
+
+/** Find an existing Flogger spreadsheet in the user's Drive. Returns id if found, else null. */
+export async function findFloggerSpreadsheet(accessToken: string): Promise<string | null> {
+  const q = [
+    `name='${FLOGGER_SHEET_NAME}'`,
+    `mimeType='${SPREADSHEET_MIME}'`,
+    'trashed=false',
+  ].join(' and ')
+  const params = new URLSearchParams({ q, orderBy: 'createdTime', pageSize: '1', fields: 'files(id)' })
+  const result = await api<{ files?: { id: string }[] }>(
+    accessToken,
+    `https://www.googleapis.com/drive/v3/files?${params}`
+  )
+  const file = result.files?.[0]
+  return file?.id ?? null
+}
+
+/** Use existing Flogger sheet in Drive if present, otherwise create one. Single source of truth per Google account. */
+export async function findOrCreateSpreadsheet(accessToken: string): Promise<string> {
+  const existing = await findFloggerSpreadsheet(accessToken)
+  if (existing) return existing
+  return createSpreadsheet(accessToken)
+}
+
 /** Create a new spreadsheet in the user's Drive and set headers. Returns spreadsheet ID. */
 export async function createSpreadsheet(accessToken: string): Promise<string> {
   const file = await api<{ id: string }>(accessToken, 'https://www.googleapis.com/drive/v3/files', {
     method: 'POST',
     body: JSON.stringify({
-      name: 'Flogger',
-      mimeType: 'application/vnd.google-apps.spreadsheet',
+      name: FLOGGER_SHEET_NAME,
+      mimeType: SPREADSHEET_MIME,
     }),
   })
   const spreadsheetId = file.id

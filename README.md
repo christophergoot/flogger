@@ -48,7 +48,7 @@ The app will be at `https://<username>.github.io/flogger/`. If your repo name is
 ## How it works
 
 - **Sign-in:** Google Sign-In (OAuth) with scopes for email, Sheets, and Drive file creation.
-- **Sheet per user:** On first sign-in, the app creates a spreadsheet **Flogger** in the user's Drive and stores its ID in `localStorage` keyed by email. Later sign-ins reuse that sheet.
+- **Sheet per user (single source of truth):** On sign-in, the app looks in the user's Google Drive for an existing spreadsheet named **Flogger**. If found, that sheet is used; otherwise a new one is created. All devices using the same Google account therefore share one spreadsheet. The sheet ID is cached in `localStorage` per device for speed.
 - **Data:** Rows are written to and read from that sheet via the Sheets API (append, read, delete row). Columns: `id`, `name`, `duration_minutes`, `end_time`, `created_at`.
 
 ## Features
